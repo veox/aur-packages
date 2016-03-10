@@ -1,6 +1,6 @@
 pkgbase = geda-gaf-git
 	pkgdesc = gEDA/gaf suite - Contains gschem, gnetlist, gsymcheck, gattrib, utilities and documentation from the gEDA project (latest git revision)
-	pkgver = 5902.da7dabe
+	pkgver = 6544.c5eaa84
 	pkgrel = 1
 	url = http://www.geda-project.org/
 	install = geda-gaf.install
