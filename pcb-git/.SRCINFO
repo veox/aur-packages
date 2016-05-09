@@ -1,5 +1,5 @@
 pkgbase = pcb-git
-	pkgdesc = Interactive printed circuit board editor
+	pkgdesc = Interactive printed circuit board editor (latest git revision)
 	pkgver = 20160425
 	pkgrel = 1
 	url = http://pcb.geda-project.org/
