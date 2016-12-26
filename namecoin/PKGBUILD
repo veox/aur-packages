@@ -1,0 +1,86 @@
+# Maintainer: Noel Maersk <veox+aur veox pw>
+# Based on `bitcoin` PKGBUILD in [community]:
+# https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/bitcoin
+
+pkgbase=namecoin
+pkgname=('namecoin-cli' 'namecoin-daemon' 'namecoin-qt' 'namecoin-tx')
+_pkgdesc="An experimental blockchain-based domain name and identity system"
+pkgver=0.12.0
+pkgrel=1
+arch=('i686' 'x86_64')
+url='https://namecoin.org'
+makedepends=(boost libevent qt5-base qt5-tools qrencode miniupnpc protobuf zeromq)
+license=('MIT')
+source=("https://github.com/namecoin/namecoin-core/archive/v$pkgver.tar.gz"
+        'namecoin-qt.desktop')
+md5sums=('887e618fa025e98e1c7d6f88facadee2'
+         '5ced8dc22ab379f6340d7a1e98fb028f')
+
+provides=('namecoin')
+conflicts=('namecoin-qt' 'namecoin-qt-git')
+
+build() {
+  cd "$srcdir/$pkgbase-core-$pkgver/"
+  ./autogen.sh
+  # qt5 is default, but specify explicitly
+  # BDB much newer than 4.8 in [core]
+  ./configure --prefix=/usr --with-gui=qt5 --with-incompatible-bdb
+  make
+}
+
+package_namecoin-daemon() {
+  pkgdesc="$_pkgdesc (daemon)"
+  depends=(boost-libs libevent miniupnpc zeromq)
+
+  cd "$srcdir/$pkgbase-core-$pkgver/"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+
+  install -Dm755 src/bitcoind "$pkgdir"/usr/bin/namecoind
+  install -Dm644 contrib/debian/examples/bitcoin.conf \
+          "$pkgdir/usr/share/doc/$pkgname/examples/namecoin.conf"
+  install -Dm644 contrib/debian/manpages/bitcoind.1 \
+          "$pkgdir"/usr/share/man/man1/namecoind.1
+  install -Dm644 contrib/debian/manpages/bitcoin.conf.5 \
+          "$pkgdir"/usr/share/man/man5/namecoin.conf.5
+}
+
+package_namecoin-cli() {
+  pkgdesc="$_pkgdesc (RPC command-line client)"
+  depends=(boost-libs libevent)
+
+  cd "$srcdir/$pkgbase-core-$pkgver/"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+
+  install -Dm755 src/bitcoin-cli "$pkgdir"/usr/bin/namecoin-cli
+  install -Dm644 contrib/debian/manpages/bitcoin-cli.1 \
+          "$pkgdir"/usr/share/man/man1/namecoin-cli.1
+}
+
+package_namecoin-qt() {
+  pkgdesc="$_pkgdesc (Qt application)"
+  depends=(boost-libs desktop-file-utils libevent qt5-base miniupnpc qrencode protobuf zeromq)
+  install=namecoin-qt.desktop
+
+  cd "$srcdir/$pkgbase-core-$pkgver/"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+
+  install -Dm755 src/qt/bitcoin-qt "$pkgdir"/usr/bin/namecoin-qt
+  install -Dm644 contrib/debian/examples/bitcoin.conf \
+          "$pkgdir/usr/share/doc/$pkgname/examples/namecoin.conf"
+  install -Dm644 contrib/debian/manpages/bitcoind.1 \
+          "$pkgdir"/usr/share/man/man1/namecoind.1
+  install -Dm644 contrib/debian/manpages/bitcoin.conf.5 \
+          "$pkgdir"/usr/share/man/man5/namecoin.conf.5
+}
+
+package_namecoin-tx() {
+  pkgdesc="$_pkgdesc (transaction tool)"
+  depends=(boost-libs openssl)
+
+  cd "$srcdir/$pkgbase-core-$pkgver/"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+
+  install -Dm755 src/bitcoin-tx "$pkgdir"/usr/bin/namecoin-tx
+}
+
+# vim:set ts=2 sw=2 et:

@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=namecoin-qt %u
+GenericName[en_US]=An experimental blockchain-based domain name and identity system (Qt application)\s
+GenericName=An experimental blockchain-based domain name and identity system (Qt application)\s
+Icon=exec
+MimeType=
+Name[en_US]=Namecoin-Qt
+Name=Namecoin-Qt
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
