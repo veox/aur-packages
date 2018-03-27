@@ -1,7 +1,7 @@
 # Maintainer: Noel Maersk <veox plus packages the veox toad pw>
 
 pkgname=emacs-lll-mode-git
-pkgver=v0.1.0.r0.gdecc55c
+pkgver=v0.1.0.r1.g0e53994
 pkgrel=1
 pkgdesc='An emacs major mode for editing Ethereum LLL code'
 arch=('x86_64')
